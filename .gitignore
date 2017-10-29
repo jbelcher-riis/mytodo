@@ -4,6 +4,7 @@
 /bin
 src/main/resources/static
 .DS_Store
+/bin/application.properties
 
 ### STS ###
 .apt_generated
