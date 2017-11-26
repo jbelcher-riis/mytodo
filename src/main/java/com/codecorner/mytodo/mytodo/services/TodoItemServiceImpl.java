@@ -1,5 +1,7 @@
 package com.codecorner.mytodo.mytodo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class TodoItemServiceImpl implements TodoItemService {
     @Override
     public TodoItem save(TodoItem todoItem) {
 	return this.todoItemRepository.save(todoItem);
+    }
+
+    @Override
+    public List<TodoItem> findAll() {
+	return todoItemRepository.findAll();
     }
 
 }

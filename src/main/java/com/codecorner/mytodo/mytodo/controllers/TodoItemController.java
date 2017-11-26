@@ -1,5 +1,7 @@
 package com.codecorner.mytodo.mytodo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +22,10 @@ public class TodoItemController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public @ResponseBody TodoItem createTodoItem(@RequestBody TodoItem todoItem) {
 	return todoItemService.save(todoItem);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public @ResponseBody List<TodoItem> findAll() {
+	return todoItemService.findAll();
     }
 }

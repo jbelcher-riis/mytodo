@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,6 +35,23 @@ public class TodoItemControllerTest {
 
 	assertThat(subject.createTodoItem(todoItemRequest).getId(), equalTo(100L));
 
+    }
+
+    @Test
+    public void testFindAllShouldReturnPopulatedList() {
+	final List<TodoItem> todoItems = new ArrayList<TodoItem>();
+
+	final TodoItem todoItem = new TodoItem();
+	todoItem.setDescription("I am a todo list item");
+	todoItem.setId(100L);
+
+	todoItems.add(todoItem);
+
+	when(todoItemService.findAll()).thenReturn(todoItems);
+
+	final List<TodoItem> result = subject.findAll();
+
+	assertThat(result.size(), equalTo(1));
     }
 
 }
