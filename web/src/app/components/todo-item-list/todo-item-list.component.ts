@@ -25,6 +25,9 @@ export class TodoItemListComponent implements OnInit {
   todoItems: TodoItem[] = [];
 
   ngOnInit() {
+    this.todoItemService.getTodoItems().subscribe(
+      todoItems => this.todoItems = todoItems
+    );
   }
 
   onSubmit(model) {

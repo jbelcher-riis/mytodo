@@ -16,4 +16,9 @@ export class TodoItemService {
     return this.http.post(this.baseUrl, todoItem)
       .map((res: Response)=>res.json());
   }
+
+  getTodoItems(): Observable<TodoItem[]> {
+    return this.http.get(this.baseUrl)
+      .map((res: Response) => res.json());
+  }
 }

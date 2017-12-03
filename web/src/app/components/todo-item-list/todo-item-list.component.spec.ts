@@ -43,4 +43,21 @@ describe('TodoItemListComponent', () => {
       }); 
     });
   });
+
+  describe("ngOnInit", () => {
+    it("should add two TodoItems to the todoItems array", () => {
+      spyOn(todoItemService, 'getTodoItems').and.returnValue(Observable.of([
+        {id: 1, item: "test1"},
+        {id: 2, item: "test2"}
+      ]));
+      component.ngOnInit();
+
+      fixture.detectChanges()
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+
+        expect(component.todoItems.length).toEqual(2);
+      });
+    });
+  });
 });

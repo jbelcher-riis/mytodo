@@ -33,4 +33,23 @@ describe('TodoItemService', () => {
       })
     })));
   });
+
+  describe('getTodoItems', () => {
+    it("should return two todo items", async(inject([TodoItemService, MockBackend], (service, backend) => {
+      backend.connections.subscribe(c => {
+        c.mockRespond(new Response(new ResponseOptions({ status: 200, body: JSON.stringify(
+        [
+          {description: "test2", id: 2},
+          {description: "test5", id: 5}
+        ]
+        )})))
+      })
+
+      service.getTodoItems().subscribe(response => {
+        expect(response.length).toEqual(2);
+
+        expect(response[0].id).toEqual(2);
+      })
+    })));
+  });
 });

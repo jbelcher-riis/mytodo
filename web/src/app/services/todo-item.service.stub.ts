@@ -4,4 +4,8 @@ export class TodoItemServiceStub {
     saveTodoItem() {
         return Observable.of();
     }
+
+    getTodoItems() {
+        return Observable.of();
+      }
 }
