@@ -24,4 +24,9 @@ public class TodoItemServiceImpl implements TodoItemService {
 	return todoItemRepository.findAll();
     }
 
+    @Override
+    public void delete(long todoItemId) {
+	todoItemRepository.delete(todoItemId);
+    }
+
 }

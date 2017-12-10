@@ -3,6 +3,7 @@ package com.codecorner.mytodo.mytodo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,5 +28,10 @@ public class TodoItemController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public @ResponseBody List<TodoItem> findAll() {
 	return todoItemService.findAll();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody void delete(@PathVariable("id") Long todoItemId) {
+	todoItemService.delete(todoItemId);
     }
 }

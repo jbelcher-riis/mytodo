@@ -2,6 +2,8 @@ package com.codecorner.mytodo.mytodo.services;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -57,6 +59,17 @@ public class TodoItemServiceTest {
 	final List<TodoItem> result = subject.findAll();
 
 	assertThat(result.size(), equalTo(1));
+    }
+
+    @Test
+    public void deleteShouldCallDeleteRepository() {
+	final long idToDelete = 42L;
+
+	doNothing().when(todoItemRepository).delete(idToDelete);
+
+	subject.delete(idToDelete);
+
+	verify(todoItemRepository).delete(idToDelete);
     }
 
 }

@@ -9,4 +9,6 @@ public interface TodoItemService {
     public TodoItem save(TodoItem todoTime);
 
     public List<TodoItem> findAll();
+
+    public void delete(long todoItemId);
 }
