@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoItemListComponent } from './components/todo-item-list/todo-item-list.component';
 import { TodoItemService } from 'app/services/todo-item.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TodoItemService } from 'app/services/todo-item.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [TodoItemService],
   bootstrap: [AppComponent]

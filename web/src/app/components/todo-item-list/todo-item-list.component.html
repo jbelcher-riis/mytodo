@@ -24,12 +24,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let todoItem of todoItems">
+            <tr *ngFor="let todoItem of todoItems | paginate: { itemsPerPage: 5, currentPage: p }">
               <td>{{todoItem.description}}</td>
               <td></td>
             </tr>
           </tbody>
         </table>
+
+        <pagination-controls class="myPagination"
+        previousLabel="**"
+        nextLabel="##"
+          (pageChange)="p = $event" maxSize="4">
+        </pagination-controls>
       </div>
     </div>
   </div>
