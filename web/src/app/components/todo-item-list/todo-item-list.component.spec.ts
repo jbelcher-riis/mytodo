@@ -4,6 +4,7 @@ import { TodoItemListComponent } from './todo-item-list.component';
 import { TodoItemService } from '../../services/todo-item.service';
 import { TodoItemServiceStub } from '../../services/todo-item.service.stub';
 import { Observable } from 'rxjs/Rx';
+import { TodoItem } from '../../models/todo-item';
 
 describe('TodoItemListComponent', () => {
   let component: TodoItemListComponent;
@@ -58,6 +59,32 @@ describe('TodoItemListComponent', () => {
 
         expect(component.todoItems.length).toEqual(2);
       });
+    });
+  });
+
+  describe("deleteTodoItem", () => {
+    it("should remove a todo item from the todo item array", () => {
+      
+
+      let todoItem1 = new TodoItem();
+      todoItem1.description = "test";
+      todoItem1.id = 42;
+
+      let todoItem2 = new TodoItem();
+      todoItem2.description = "test";
+      todoItem2.id = 43;
+
+      spyOn(todoItemService, 'deleteTodoItem').and.returnValue(Observable.of(todoItem1));
+      component.todoItems.push(todoItem1);
+      component.todoItems.push(todoItem2);
+
+      component.deleteTodoItem(todoItem1);
+
+      fixture.detectChanges();
+      fixture.whenStable().then(()=>{
+        fixture.detectChanges();
+        expect(component.todoItems.length).toEqual(1);
+      }); 
     });
   });
 });

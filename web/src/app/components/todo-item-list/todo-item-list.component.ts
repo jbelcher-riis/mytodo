@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TodoItem } from '../../models/todo-item';
 import { TodoItemService } from '../../services/todo-item.service';
@@ -15,6 +15,7 @@ export class TodoItemListComponent implements OnInit {
     this.createForm();
   }
 
+  @ViewChild("description") descriptionInput: ElementRef;
   private createForm() {
     this.todoForm = this.formBuilder.group({
       item: ''
@@ -40,4 +41,15 @@ export class TodoItemListComponent implements OnInit {
     this.todoForm.reset();
   }
 
+  deleteTodoItem(todoItemToRemove: TodoItem) {
+    this.todoItemService.deleteTodoItem(todoItemToRemove).subscribe(
+      res => {
+        this.todoItems = this.todoItems.filter(
+          todoItem => todoItem.id !== todoItemToRemove.id
+        )
+
+        this.descriptionInput.nativeElement.focus();
+      }
+    )
+  }
 }

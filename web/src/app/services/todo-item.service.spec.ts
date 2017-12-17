@@ -2,6 +2,7 @@ import { TestBed, inject, async} from '@angular/core/testing';
 import { HttpModule, Http, Response, BaseRequestOptions, XHRBackend, ResponseOptions } from '@angular/http';
 import { TodoItemService } from './todo-item.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { TodoItem } from '../models/todo-item';
 
 describe('TodoItemService', () => {
   beforeEach(() => {
@@ -49,6 +50,22 @@ describe('TodoItemService', () => {
         expect(response.length).toEqual(2);
 
         expect(response[0].id).toEqual(2);
+      })
+    })));
+  });
+
+  describe('deleteTodoItem', () => {
+    it("should have a 200 response on success", async(inject([TodoItemService, MockBackend],(service, backend) => {
+      backend.connections.subscribe(c => {
+        c.mockRespond(new Response(new ResponseOptions({ status: 200 })))
+      });
+
+      let todoItem = new TodoItem();
+      todoItem.description = "test";
+      todoItem.id = 42;
+
+      service.deleteTodoItem(todoItem).subscribe(response => {
+        expect(response).toEqual({});
       })
     })));
   });

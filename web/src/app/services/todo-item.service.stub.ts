@@ -7,5 +7,9 @@ export class TodoItemServiceStub {
 
     getTodoItems() {
         return Observable.of();
-      }
+    }
+
+    deleteTodoItem() {
+        return Observable.of();
+    }
 }
