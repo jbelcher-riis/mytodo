@@ -5,6 +5,10 @@ export class TodoItemServiceStub {
         return Observable.of();
     }
 
+    updateTodoItem() {
+        return Observable.of();
+    }
+
     getTodoItems() {
         return Observable.of();
     }

@@ -28,7 +28,24 @@ describe('TodoItemService', () => {
         c.mockRespond(new Response(new ResponseOptions({ status: 200, body: JSON.stringify({description: "test", id: 5})})))
       })
 
-      service.saveTodoItem().subscribe(response => {
+      let todoItem = new TodoItem();
+
+      service.saveTodoItem(todoItem).subscribe(response => {
+        expect(response.id).toEqual(5);
+        expect(response.description).toEqual("test");
+      })
+    })));
+  });
+
+  describe('updateTodoItem', () => {
+    it("should return todo item", async(inject([TodoItemService, MockBackend], (service, backend) => {
+      backend.connections.subscribe(c => {
+        c.mockRespond(new Response(new ResponseOptions({ status: 200, body: JSON.stringify({description: "test", id: 5})})))
+      })
+
+      let todoItem = new TodoItem();
+
+      service.updateTodoItem(todoItem).subscribe(response => {
         expect(response.id).toEqual(5);
         expect(response.description).toEqual("test");
       })

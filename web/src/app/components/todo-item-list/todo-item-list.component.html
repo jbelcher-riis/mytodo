@@ -8,8 +8,12 @@
             <input type="text" class="form-control" formControlName="item" #description>
           </div>
           <div class="col-2 ml-auto text-right">
-            <button type="submit" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" *ngIf="!selectedTodoItem">
               <span>Create Task</span>
+            </button>
+
+            <button type="submit" class="btn btn-primary" *ngIf="selectedTodoItem">
+              <span>Update Task</span>
             </button>
           </div>
         </div>
@@ -24,10 +28,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let todoItem of todoItems">
+            <tr *ngFor="let todoItem of todoItems" (click)="selectTodoItem(todoItem)">
               <td>{{todoItem.description}}</td>
               <td class="text-right">
-                <button class="btn btn-primary" (click)="deleteTodoItem(todoItem)">Delete</button>
+                <button class="btn btn-primary" (click)="deleteTodoItem(todoItem, $event)">Delete</button>
               </td>
             </tr>
           </tbody>

@@ -27,6 +27,11 @@ export class TodoItemService {
     return this.http.delete(this.baseUrl + "/" + todoItem.id).map(this.extractData);
   }
 
+  updateTodoItem(todoItem: TodoItem): Observable<TodoItem> {
+    return this.http.put(this.baseUrl + "/" + todoItem.id, todoItem)
+      .map((res: Response)=>res.json());
+  }
+
   private extractData(res: Response) {
     return res.text().length ? res.json() : {};
 }

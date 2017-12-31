@@ -23,6 +23,7 @@ export class TodoItemListComponent implements OnInit {
   }
 
   todoForm: FormGroup;
+  selectedTodoItem: TodoItem;
   todoItems: TodoItem[] = [];
 
   ngOnInit() {
@@ -33,15 +34,28 @@ export class TodoItemListComponent implements OnInit {
 
   onSubmit(model) {
     const todoItemToSave: TodoItem = {
-      id: null,
+      id: this.selectedTodoItem ? this.selectedTodoItem.id : null,
       description: model.item
     }
-    this.todoItemService.saveTodoItem(todoItemToSave).subscribe(todoItem => this.todoItems.push(todoItem));
+    if(!this.selectedTodoItem){
+      this.todoItemService.saveTodoItem(todoItemToSave).subscribe(todoItem => this.todoItems.push(todoItem));
+    }else{
+      this.todoItemService.updateTodoItem(todoItemToSave).subscribe(result => this.todoItems.filter(
+       ( todoItem =>this.isSameTodoItem(result, todoItem)
+      ))[0].description = result.description);
+    }
 
+    this.selectedTodoItem  = null;
     this.todoForm.reset();
   }
 
-  deleteTodoItem(todoItemToRemove: TodoItem) {
+  private isSameTodoItem(searchBy: TodoItem, lookingFor: TodoItem) {
+    return searchBy.id === lookingFor.id;
+  }
+
+  deleteTodoItem(todoItemToRemove: TodoItem, event) {
+    event.stopPropagation();
+
     this.todoItemService.deleteTodoItem(todoItemToRemove).subscribe(
       res => {
         this.todoItems = this.todoItems.filter(
@@ -51,5 +65,11 @@ export class TodoItemListComponent implements OnInit {
         this.descriptionInput.nativeElement.focus();
       }
     )
+  }
+
+  selectTodoItem(todoItem: TodoItem) {
+    this.selectedTodoItem = todoItem;
+    this.todoForm.controls["item"].setValue(todoItem.description);
+    this.descriptionInput.nativeElement.focus();
   }
 }

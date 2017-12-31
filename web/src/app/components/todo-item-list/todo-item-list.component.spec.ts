@@ -34,13 +34,40 @@ describe('TodoItemListComponent', () => {
 
   describe("onSubmit", () => {
     it("should add a todo item to the todo item array", () => {
-      spyOn(todoItemService, 'saveTodoItem').and.returnValue(Observable.of({id: 1, item: "test"}));
+      spyOn(todoItemService, 'saveTodoItem').and.returnValue(Observable.of({id: 1, description: "test"}));
       component.onSubmit({item: "test"});
 
       fixture.detectChanges();
       fixture.whenStable().then(()=>{
         fixture.detectChanges();
         expect(component.todoItems.length).toEqual(1);
+      }); 
+    });
+
+    it("should update a todo item and update array", () => {
+      spyOn(todoItemService, 'updateTodoItem').and.returnValue(Observable.of({id: 42, description: "test"}));
+    
+      let selectedTodoItem = new TodoItem();
+      selectedTodoItem.description = "demo";
+      selectedTodoItem.id = 42;
+
+      let oldTodoItem = new TodoItem();
+      oldTodoItem.description = "demo";
+      oldTodoItem.id = 42;
+
+      component.todoItems.push(oldTodoItem);
+
+      component.selectedTodoItem = selectedTodoItem;
+
+      component.onSubmit({item: "test"});
+
+      fixture.detectChanges();
+      fixture.whenStable().then(()=>{
+        fixture.detectChanges();
+        expect(component.todoItems.length).toEqual(1);
+        expect(component.todoItems[0].id).toEqual(42);
+        expect(component.todoItems[0].description).toEqual("test");
+        expect(component.selectedTodoItem).toBeNull();
       }); 
     });
   });
@@ -85,6 +112,19 @@ describe('TodoItemListComponent', () => {
         fixture.detectChanges();
         expect(component.todoItems.length).toEqual(1);
       }); 
+    });
+  });
+
+  describe("selectTodoItem", () => {
+    it("set selectedTodoItem", () => {
+      let todoItem = new TodoItem();
+      todoItem.description = "demo";
+      todoItem.id = 42;
+
+      component.selectTodoItem(todoItem);
+
+      expect(component.selectedTodoItem.description).toEqual("demo");
+      expect(component.selectedTodoItem.id).toEqual(42);
     });
   });
 });
