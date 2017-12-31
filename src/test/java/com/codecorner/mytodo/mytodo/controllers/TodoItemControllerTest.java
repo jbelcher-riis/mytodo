@@ -66,5 +66,24 @@ public class TodoItemControllerTest {
 
 	verify(todoItemService).delete(idToDelete);
     }
+    
+    @Test
+    public void testUpdateShouldReturnUpdatedTodoItem() {
+    		final long idToUpdate = 42L;
+    		
+    		final TodoItem todoItemRequest = new TodoItem();
+    		todoItemRequest.setId(42L);
+    		todoItemRequest.setDescription("old description");
+    		
+    		final TodoItem todoItemResponse = new TodoItem();
+    		todoItemResponse.setId(42L);
+    		todoItemResponse.setDescription("updated description");
+    		
+    		when(todoItemService.update(42L, todoItemRequest)).thenReturn(todoItemResponse);
+    		
+    		TodoItem response = subject.update(42L, todoItemRequest);
+    		assertThat(response.getId(), equalTo(42L));
+    		assertThat(response.getDescription(), equalTo("updated description"));
+    }
 
 }

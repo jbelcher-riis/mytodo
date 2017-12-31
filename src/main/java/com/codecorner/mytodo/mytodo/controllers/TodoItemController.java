@@ -34,4 +34,9 @@ public class TodoItemController {
     public @ResponseBody void delete(@PathVariable("id") Long todoItemId) {
 	todoItemService.delete(todoItemId);
     }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public @ResponseBody TodoItem update(@PathVariable("id") Long todoItemId, @RequestBody TodoItem todoItem) {
+    		return todoItemService.update(todoItemId, todoItem);
+    }
 }

@@ -71,5 +71,26 @@ public class TodoItemServiceTest {
 
 	verify(todoItemRepository).delete(idToDelete);
     }
+    
+    @Test
+    public void testShouldReturnUpdatedTodoItem() {
+    		long idToUpdate = 42L;
+    		
+    		final TodoItem newTodoItem = new TodoItem();
+    		newTodoItem.setDescription("I am a todo list item");
+    		newTodoItem.setId(42L);
+    		
+    		final TodoItem oldTodoItem = new TodoItem();
+    		oldTodoItem.setDescription("I am old");
+    		oldTodoItem.setId(42L);
+    		
+    		when(todoItemRepository.findOne(idToUpdate)).thenReturn(oldTodoItem);
+    		when(todoItemRepository.save(oldTodoItem)).thenReturn(newTodoItem);
+    		
+    		TodoItem response = subject.update(idToUpdate, newTodoItem);
+    		
+    		assertThat(response.getDescription(), equalTo("I am a todo list item"));
+    		assertThat(response.getId(), equalTo(42L));
+    }
 
 }

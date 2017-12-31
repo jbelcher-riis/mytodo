@@ -29,4 +29,15 @@ public class TodoItemServiceImpl implements TodoItemService {
 	todoItemRepository.delete(todoItemId);
     }
 
+	@Override
+	public TodoItem update(long todoItemId, TodoItem todoItem) {
+		
+		TodoItem todoItemToUpdate = todoItemRepository.findOne(todoItemId);
+		
+		todoItemToUpdate.setDescription(todoItem.getDescription());
+		
+		return this.save(todoItemToUpdate);
+		
+	}
+
 }
